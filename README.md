@@ -30,14 +30,14 @@ Server side:
 
 ## Requirements
 
-- Minecraft 26.2
+- Minecraft 26.3
 - Fabric Loader 0.19.5 or newer
 - Java 25
 - Fabric API
 
 ## Installation
 
-Place `zalks-stats-1.2.0.jar` in your `mods` folder and launch the game.
+Place `zalks-stats-1.3.0.jar` in your `mods` folder and launch the game.
 
 ## Building
 
