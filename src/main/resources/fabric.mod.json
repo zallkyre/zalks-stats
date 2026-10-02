@@ -17,11 +17,14 @@
 	"entrypoints": {
 		"main": [
 			"net.zalks.stats.ZalksStats"
+		],
+		"client": [
+			"net.zalks.stats.client.ZalksStatsClient"
 		]
 	},
-	"mixins": [
-		"zalks-stats.mixins.json"
-	],
+	"suggests": {
+		"modmenu": "*"
+	},
 	"depends": {
 		"fabricloader": ">=0.19.5",
 		"minecraft": "~26.3",
