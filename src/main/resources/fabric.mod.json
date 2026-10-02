@@ -3,7 +3,7 @@
 	"id": "zalks-stats",
 	"version": "${version}",
 	"name": "zalk's stats",
-	"description": "read the logs nerd!",
+	"description": "Minimal stat tool that logs hardware, TPS, FPS, heap, and player events, so bugs are easier to trace.",
 	"authors": [
 		"zalk"
 	],
