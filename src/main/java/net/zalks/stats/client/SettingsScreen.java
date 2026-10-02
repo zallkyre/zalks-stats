@@ -58,7 +58,7 @@ public class SettingsScreen extends Screen {
 
 		row = 0;
 		addRenderableWidget(choice(rightX, startY + row++ * (ROW_HEIGHT + ROW_SPACING),
-				"FPS warn below", Settings.FPS_THRESHOLD_CHOICES, settings.fpsWarnThreshold,
+				"FPS warn below", Settings.FPS_WARN_CHOICES, settings.fpsWarnThreshold,
 				v -> String.valueOf(v) + " fps",
 				v -> settings.fpsWarnThreshold = v));
 		addRenderableWidget(choice(rightX, startY + row++ * (ROW_HEIGHT + ROW_SPACING),

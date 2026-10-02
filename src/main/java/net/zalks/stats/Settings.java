@@ -101,23 +101,35 @@ public final class Settings {
 	}
 
 	public void clamp() {
-		fpsWarnThreshold = clampInt(fpsWarnThreshold, 1, 240, 20);
-		fpsRecoverThreshold = clampInt(fpsRecoverThreshold, 1, 240, 30);
-		// recovery must sit above the warn line, otherwise the FPS warning
-		// would re-arm every single tick and flood the log.
+		fpsWarnThreshold = clampChoice(fpsWarnThreshold, FPS_WARN_CHOICES, 20);
+		fpsRecoverThreshold = clampChoice(fpsRecoverThreshold, FPS_THRESHOLD_CHOICES, 30);
+		// Recovery must sit above the warn line, otherwise the FPS warning re-arms
+		// as soon as the client dips under warn again. Snap to the next offered
+		// threshold instead of adding a fixed offset: an off-list value such as
+		// warn+5 can never be cycled back to by the settings screen.
 		if (fpsRecoverThreshold <= fpsWarnThreshold) {
-			fpsRecoverThreshold = Math.min(240, fpsWarnThreshold + 5);
+			fpsRecoverThreshold = nextAbove(fpsWarnThreshold, FPS_THRESHOLD_CHOICES);
 		}
 		fpsSummaryInterval = clampChoice(fpsSummaryInterval, FPS_SUMMARY_CHOICES, 300);
 		tpsInterval = clampChoice(tpsInterval, TPS_CHOICES, 5);
 		heapInterval = clampChoice(heapInterval, HEAP_CHOICES, 300);
 	}
 
-	private static int clampInt(int value, int min, int max, int fallback) {
-		if (value < min || value > max) {
-			return fallback;
+	/**
+	 * The smallest value in {@code allowed} that is strictly greater than {@code value},
+	 * or the last entry if {@code value} is at or above every option.
+	 *
+	 * <p>Invariant relied on by {@link #clamp()}: {@link #FPS_WARN_CHOICES} tops out
+	 * below {@link #FPS_THRESHOLD_CHOICES}, so a recovery value above any legal warn
+	 * value always exists.
+	 */
+	private static int nextAbove(int value, int[] allowed) {
+		for (int option : allowed) {
+			if (option > value) {
+				return option;
+			}
 		}
-		return value;
+		return allowed[allowed.length - 1];
 	}
 
 	private static int clampChoice(int value, int[] allowed, int fallback) {
@@ -133,7 +145,9 @@ public final class Settings {
 	public static final int[] FPS_SUMMARY_CHOICES = {60, 120, 300, 600, 900};
 	public static final int[] TPS_CHOICES = {1, 2, 5, 10, 20, 30};
 	public static final int[] HEAP_CHOICES = {60, 120, 300, 600, 900};
-	public static final int[] FPS_THRESHOLD_CHOICES = {10, 15, 20, 25, 30, 40, 50, 60};
+	public static final int[] FPS_THRESHOLD_CHOICES = {10, 15, 20, 25, 30, 40, 50, 60, 75, 90, 120};
+	/** Warn stops one below the top so a strictly higher recovery threshold always exists. */
+	public static final int[] FPS_WARN_CHOICES = {10, 15, 20, 25, 30, 40, 50, 60, 75, 90};
 
 	/** Renders an interval in seconds as something readable. */
 	public static String formatInterval(int seconds) {
