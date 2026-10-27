@@ -73,3 +73,7 @@ The built jar appears in `build/libs/`. Java 25 or newer is required.
 ## License
 
 Released into the public domain. See the LICENSE file.
+
+---
+
+**LLM guide** — zalks stats source code · Stack: Java · Run: `./gradlew build` · License: LICENSE
