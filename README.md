@@ -76,4 +76,4 @@ Released into the public domain. See the LICENSE file.
 
 ---
 
-**LLM guide** — zalks stats source code · Stack: Java · Run: `./gradlew build` · License: LICENSE
+**LLM guide** — zalks stats source code · Stack: Java · Run: `./gradlew build` · License: MIT-0 - no conditions, resale allowed
