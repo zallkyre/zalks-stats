@@ -1,0 +1,66 @@
+[mod]
+id = "zalks_stats"
+version = "0.1.0"
+priority = 100
+
+[compatibility]
+horizon_revision = "587f81f9c69629e999584f30aae0c9edacfc1b1d"
+
+[[module]]
+id = "zalks_stats"
+file = "crates/horizon-client/src/game.rs"
+name = "zalks_stats"
+source = "zalks_stats.rs"
+
+[[injection]]
+id = "frame"
+kind = "HEAD"
+target = "horizon_client::game::Game<'_>::native_frame"
+helper = "frame.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "elapsed", ty = "std::time::Duration", value = "elapsed" },
+]
+
+[[injection]]
+id = "server-tick"
+kind = "HEAD"
+target = "horizon_client::game::Game<'_>::native_server_tick"
+helper = "server_tick.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "phase", ty = "crate::game::native_lifecycle::ServerTickPhase", value = "phase" },
+]
+
+[[injection]]
+id = "world-lifecycle"
+kind = "HEAD"
+target = "horizon_client::game::Game<'_>::native_world_lifecycle"
+helper = "lifecycle.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "phase", ty = "crate::game::native_lifecycle::WorldPhase", value = "phase" },
+  { name = "error_text", ty = "&str", value = "error_text" },
+]
+
+[[injection]]
+id = "command"
+kind = "HEAD"
+target = "horizon_client::game::Game<'_>::native_command"
+helper = "command.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "command", ty = "&str", value = "command" },
+  { name = "ran", ty = "&mut bool", value = "ran" },
+]
+
+[[injection]]
+id = "hud"
+kind = "HEAD"
+target = "horizon_client::game::Game<'_>::native_hud"
+helper = "hud.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "batch", ty = "&mut horizon_client::hud::HudBatch", value = "batch" },
+  { name = "corners", ty = "&mut horizon_client::extras_hud::Corners", value = "corners" },
+]
