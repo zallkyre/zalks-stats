@@ -1,4 +1,4 @@
-[mod]
+﻿[mod]
 id = "zalks_stats"
 version = "0.1.0"
 priority = 100
@@ -15,7 +15,7 @@ source = "zalks_stats.rs"
 [[injection]]
 id = "frame"
 kind = "HEAD"
-target = "horizon_client::game::Game<'_>::native_frame"
+target = "horizon_client::game::native_hooks::Game<'_>::native_frame"
 helper = "frame.rs"
 bindings = [
   { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
@@ -25,7 +25,7 @@ bindings = [
 [[injection]]
 id = "server-tick"
 kind = "HEAD"
-target = "horizon_client::game::Game<'_>::native_server_tick"
+target = "horizon_client::game::native_hooks::Game<'_>::native_server_tick"
 helper = "server_tick.rs"
 bindings = [
   { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
@@ -35,7 +35,7 @@ bindings = [
 [[injection]]
 id = "world-lifecycle"
 kind = "HEAD"
-target = "horizon_client::game::Game<'_>::native_world_lifecycle"
+target = "horizon_client::game::native_hooks::Game<'_>::native_world_lifecycle"
 helper = "lifecycle.rs"
 bindings = [
   { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
@@ -46,7 +46,7 @@ bindings = [
 [[injection]]
 id = "command"
 kind = "HEAD"
-target = "horizon_client::game::Game<'_>::native_command"
+target = "horizon_client::game::native_hooks::Game<'_>::native_command"
 helper = "command.rs"
 bindings = [
   { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
@@ -57,7 +57,7 @@ bindings = [
 [[injection]]
 id = "hud"
 kind = "HEAD"
-target = "horizon_client::game::Game<'_>::native_hud"
+target = "horizon_client::game::native_hooks::Game<'_>::native_hud"
 helper = "hud.rs"
 bindings = [
   { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
